@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie Settings | Simanss Blocks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .legal-hero {
+      background: var(--dark); padding: 80px 48px 60px;
+      border-bottom: 1px solid #1A1A1A;
+    }
+    .legal-hero .label { color: var(--orange); display: block; margin-bottom: 12px; }
+    .legal-hero h1 { color: var(--white); font-size: clamp(48px, 6vw, 80px); }
+    .legal-hero p { color: var(--text-muted); font-size: 14px; margin-top: 12px; }
+    .legal-body {
+      max-width: 780px; margin: 0 auto; padding: 80px 48px;
+    }
+    .legal-body h2 { font-size: 28px; margin: 48px 0 12px; color: var(--black); }
+    .legal-body h2:first-child { margin-top: 0; }
+    .legal-body p { font-size: 15px; color: #444; line-height: 1.8; margin-bottom: 16px; }
+    .legal-body a { color: var(--orange); text-decoration: none; }
+    .legal-body a:hover { text-decoration: underline; }
+
+    .cookie-card {
+      border: 1px solid #E5E5E5; padding: 28px 32px;
+      margin-bottom: 2px; display: flex;
+      justify-content: space-between; align-items: flex-start;
+      gap: 24px;
+    }
+    .cookie-card-info h3 { font-size: 18px; font-family: 'Bebas Neue', sans-serif; margin-bottom: 6px; }
+    .cookie-card-info p { font-size: 14px; color: #666; line-height: 1.6; margin: 0; }
+    .cookie-card-info .label { color: var(--orange); display: block; margin-bottom: 6px; }
+
+    /* Toggle switch */
+    .toggle-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; }
+    .toggle-wrap span { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #999; }
+    .toggle { position: relative; width: 44px; height: 24px; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute; inset: 0; background: #DDD;
+      border-radius: 24px; cursor: pointer; transition: background 0.25s;
+    }
+    .toggle-slider::before {
+      content: ''; position: absolute;
+      width: 18px; height: 18px; left: 3px; top: 3px;
+      background: white; border-radius: 50%; transition: transform 0.25s;
+    }
+    .toggle input:checked + .toggle-slider { background: var(--orange); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+    .toggle input:disabled + .toggle-slider { background: var(--orange); opacity: 0.6; cursor: not-allowed; }
+    .toggle input:disabled + .toggle-slider::before { transform: translateX(20px); }
+
+    .cookie-save-btn {
+      margin-top: 40px; padding: 16px 48px;
+      background: var(--black); color: var(--white);
+      border: none; cursor: pointer; font-size: 13px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: background 0.2s;
+    }
+    .cookie-save-btn:hover { background: var(--orange); }
+    .save-note { font-size: 12px; color: #999; margin-top: 12px; }
+
+    @media (max-width: 768px) {
+      .legal-hero { padding: 60px 20px 40px; }
+      .legal-body { padding: 48px 20px; }
+      .cookie-card { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html"><img src="Images/Simanss Blocks Logo..png" alt="Simanss Blocks" style="height: 60px;"></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="index.html#products">Products</a>
+    <a href="index.html#projects">Projects</a>
+    <a href="index.html#contact">Contact</a>
+    <a href="index.html#faq">Resources</a>
+  </div>
+  <a href="index.html#contact" class="btn-quote">Quote</a>
+</nav>
+
+<div class="legal-hero">
+  <span class="label">Legal</span>
+  <h1>COOKIE SETTINGS</h1>
+  <p>Manage which cookies this website is allowed to use on your device.</p>
+</div>
+
+<div class="legal-body">
+  <h2>WHAT ARE COOKIES?</h2>
+  <p>Cookies are small text files stored on your device when you visit a website. They help the site function correctly, remember your preferences, and — in some cases — gather usage data to help us improve. You can control which cookies we use below.</p>
+
+  <div class="cookie-card">
+    <div class="cookie-card-info">
+      <span class="label">Always active</span>
+      <h3>ESSENTIAL COOKIES</h3>
+      <p>Required for the website to function. These enable core features like page navigation and form submissions. The website cannot operate without them and they cannot be disabled.</p>
+    </div>
+    <div class="toggle-wrap">
+      <label class="toggle">
+        <input type="checkbox" disabled checked>
+        <span class="toggle-slider"></span>
+      </label>
+      <span>Required</span>
+    </div>
+  </div>
+
+  <div class="cookie-card">
+    <div class="cookie-card-info">
+      <span class="label">Optional</span>
+      <h3>ANALYTICS COOKIES</h3>
+      <p>Help us understand how visitors use the site — which pages are visited most, where traffic comes from, and how users navigate. All data is anonymous and used only to improve the website.</p>
+    </div>
+    <div class="toggle-wrap">
+      <label class="toggle">
+        <input type="checkbox" id="analyticsToggle">
+        <span class="toggle-slider"></span>
+      </label>
+      <span>Optional</span>
+    </div>
+  </div>
+
+  <div class="cookie-card">
+    <div class="cookie-card-info">
+      <span class="label">Optional</span>
+      <h3>MARKETING COOKIES</h3>
+      <p>Used to show you relevant content and adverts based on your interests. These cookies may be set by our advertising partners and help us measure the effectiveness of our campaigns.</p>
+    </div>
+    <div class="toggle-wrap">
+      <label class="toggle">
+        <input type="checkbox" id="marketingToggle">
+        <span class="toggle-slider"></span>
+      </label>
+      <span>Optional</span>
+    </div>
+  </div>
+
+  <button class="cookie-save-btn" onclick="savePreferences()">Save Preferences</button>
+  <p class="save-note">Your preferences are saved locally on your device and can be updated at any time.</p>
+
+  <h2>MORE INFORMATION</h2>
+  <p>For more detail on how we handle your data, see our <a href="privacy-policy.html">Privacy Policy</a>. If you have questions, contact us at <a href="mailto:simanssblocks@gmail.com">simanssblocks@gmail.com</a>.</p>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <a href="index.html"><img src="Images/Simanss Blocks Logot.png" alt="Simanss Blocks" style="height: 45px;"></a>
+      <p class="footer-desc">Premium concrete blocks engineered for durability and strength. Building Ghana's infrastructure from the ground up since 2014.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Simanss Blocks. All rights reserved. Ghana</p>
+    <div class="footer-bottom-links">
+      <a href="privacy-policy.html">Privacy policy</a>
+      <a href="terms.html">Terms of service</a>
+      <a href="cookies.html">Cookie settings</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Load saved preferences
+  const prefs = JSON.parse(localStorage.getItem('cookiePrefs') || '{}');
+  if (prefs.analytics) document.getElementById('analyticsToggle').checked = true;
+  if (prefs.marketing) document.getElementById('marketingToggle').checked = true;
+
+  function savePreferences() {
+    localStorage.setItem('cookiePrefs', JSON.stringify({
+      analytics: document.getElementById('analyticsToggle').checked,
+      marketing:  document.getElementById('marketingToggle').checked,
+    }));
+    const btn = document.querySelector('.cookie-save-btn');
+    btn.textContent = 'Saved!';
+    setTimeout(() => { btn.textContent = 'Save Preferences'; }, 2000);
+  }
+</script>
+</body>
+</html>
