@@ -1,8 +1,11 @@
 // ── CONFIG ───────────────────────────────────────────────────────────────────
 // Sign up free at https://formspree.io, create two forms, paste the IDs below.
 // Example: 'https://formspree.io/f/abcd1234'
+// Until then, forms automatically fall back to WhatsApp (+233 55 054 8806).
 const QUOTE_ENDPOINT      = 'https://formspree.io/f/YOUR_QUOTE_FORM_ID';
 const NEWSLETTER_ENDPOINT = 'https://formspree.io/f/YOUR_NEWSLETTER_FORM_ID';
+const WHATSAPP_NUMBER     = '233550548806';
+const endpointConfigured  = (url) => !url.includes('YOUR_');
 // ─────────────────────────────────────────────────────────────────────────────
 
 // ── MODAL ────────────────────────────────────────────────────────────────────
@@ -127,7 +130,27 @@ document.getElementById('quoteForm').addEventListener('submit', async function (
   e.preventDefault();
   if (!validateForm(this)) return;
   const btn = this.querySelector('[type=submit]');
-  const ok  = await submitForm(QUOTE_ENDPOINT, this, btn, "Quote request sent! We'll get back to you within 24 hours.");
+
+  // No Formspree configured yet → send the quote via WhatsApp instead (works today)
+  if (!endpointConfigured(QUOTE_ENDPOINT)) {
+    const d = new FormData(this);
+    const msg =
+      'Hello Simanss Blocks, I would like a quote.\n' +
+      'Name: ' + d.get('firstName') + ' ' + d.get('lastName') + '\n' +
+      'Phone: ' + d.get('phone') + '\n' +
+      'Email: ' + d.get('email') + '\n' +
+      'Block type: ' + d.get('blockType') + '\n' +
+      (d.get('quantity') ? 'Quantity: ' + d.get('quantity') + ' blocks\n' : '') +
+      (d.get('town') ? 'Delivery town: ' + d.get('town') + '\n' : '') +
+      (d.get('message') ? 'Details: ' + d.get('message') : '');
+    window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
+    showToast('Opening WhatsApp with your quote request…');
+    this.reset();
+    setTimeout(closeModal, 1500);
+    return;
+  }
+
+  const ok = await submitForm(QUOTE_ENDPOINT, this, btn, "Quote request sent! We'll get back to you within 24 hours.");
   if (ok) setTimeout(closeModal, 1800);
 });
 
@@ -143,8 +166,41 @@ document.getElementById('newsletterForm').addEventListener('submit', async funct
   const emailInput = this.querySelector('input[type=email]');
   if (!validateField(emailInput)) return;
   const btn = this.querySelector('button[type=submit]');
+
+  // No Formspree configured yet → open a pre-filled email instead
+  if (!endpointConfigured(NEWSLETTER_ENDPOINT)) {
+    window.location.href = 'mailto:simanssblocks@gmail.com?subject=' +
+      encodeURIComponent('Newsletter signup') + '&body=' +
+      encodeURIComponent('Please add me to the Simanss Blocks updates list: ' + emailInput.value);
+    showToast('Opening your email app to confirm your subscription…');
+    this.reset();
+    return;
+  }
+
   await submitForm(NEWSLETTER_ENDPOINT, this, btn, "You're subscribed! Welcome to the Simanss community.");
 });
+
+// ── BLOCK CALCULATOR ──────────────────────────────────────────────────────────
+function calcBlocks() {
+  const area = parseFloat(document.getElementById('calc-area').value);
+  const perSqm = parseInt(document.getElementById('calc-size').value, 10);
+  const result = document.getElementById('calcResult');
+  if (isNaN(area) || area <= 0) {
+    showToast('Enter a valid wall area in square metres.', 'error');
+    result.hidden = true;
+    return;
+  }
+  const blocks = Math.ceil(area * perSqm);
+  const total  = blocks * 8;
+  document.getElementById('calcBlocksNum').textContent = blocks.toLocaleString();
+  document.getElementById('calcTotal').textContent = 'GH₵' + total.toLocaleString();
+  const sizeText = perSqm === 11 ? '5-inch' : '6-inch';
+  document.getElementById('calcWhatsApp').href =
+    'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(
+      'Hello Simanss Blocks, I estimate I need about ' + blocks.toLocaleString() +
+      ' ' + sizeText + ' blocks (~GH₵' + total.toLocaleString() + '). Please advise on availability and delivery.');
+  result.hidden = false;
+}
 
 // ── SCROLL REVEAL ─────────────────────────────────────────────────────────────
 const observer = new IntersectionObserver((entries) => {
